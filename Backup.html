@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backup & Restore</title>
+
+<style>
+
+body{
+    background:#0F172A;
+    color:white;
+    font-family:'Segoe UI',sans-serif;
+    padding:20px;
+}
+
+.card{
+    background:#1E293B;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:15px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    margin-top:10px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.backup-btn{
+    background:#22C55E;
+    color:white;
+}
+
+.restore-btn{
+    background:#F59E0B;
+    color:white;
+}
+
+.back-btn{
+    background:#2563EB;
+    color:white;
+}
+
+input{
+    width:100%;
+    margin-top:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>☁️ Backup & Restore</h1>
+
+<div class="card">
+
+<h3>Create Backup</h3>
+
+<p>Download all app data as a backup file.</p>
+
+<button class="backup-btn"
+onclick="createBackup()">
+📥 Create Backup
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Restore Backup</h3>
+
+<p>Select a backup file to restore data.</p>
+
+<input
+type="file"
+id="restoreFile"
+accept=".json">
+
+<button class="restore-btn"
+onclick="restoreBackup()">
+📤 Restore Backup
+</button>
+
+</div>
+
+<button class="back-btn"
+onclick="history.back()">
+← Back
+</button>
+
+<script>
+
+function createBackup(){
+
+    const backupData = {
+        userName: localStorage.getItem("userName"),
+        income: localStorage.getItem("income"),
+        expenses: JSON.parse(
+            localStorage.getItem("expenses") || "[]"
+        ),
+        budget: localStorage.getItem("budget"),
+        occupation: localStorage.getItem("occupation"),
+        location: localStorage.getItem("location"),
+        goal: localStorage.getItem("goal"),
+        about: localStorage.getItem("about")
+    };
+
+    const blob = new Blob(
+        [JSON.stringify(backupData,null,2)],
+        {type:"application/json"}
+    );
+
+    const url =
+    URL.createObjectURL(blob);
+
+    const a =
+    document.createElement("a");
+
+    a.href = url;
+    a.download = "ExpenseTrackerBackup.json";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function restoreBackup(){
+
+    const file =
+    document.getElementById("restoreFile").files[0];
+
+    if(!file){
+        alert("Select a backup file");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e){
+
+        const data =
+        JSON.parse(e.target.result);
+
+        Object.keys(data).forEach(key=>{
+
+            if(typeof data[key] === "object"){
+                localStorage.setItem(
+                    key,
+                    JSON.stringify(data[key])
+                );
+            }else{
+                localStorage.setItem(
+                    key,
+                    data[key]
+                );
+            }
+
+        });
+
+        alert("Backup Restored Successfully!");
+
+        location.reload();
+    };
+
+    reader.readAsText(file);
+}
+
+</script>
+
+</body>
+</html>

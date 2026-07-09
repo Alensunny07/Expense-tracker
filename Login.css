@@ -1,0 +1,165 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:25px;
+    background:linear-gradient(
+        180deg,
+        #050816 0%,
+        #0B1023 50%,
+        #131C3A 100%
+    );
+    color:#fff;
+}
+
+.card{
+    width:100%;
+    max-width:420px;
+    text-align:center;
+}
+
+.logo{
+    width:300px;
+    max-width:100%;
+    display:block;
+    margin:0 auto 20px;
+    animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-12px);
+    }
+}
+
+h1{
+    font-size:34px;
+    font-weight:800;
+    margin-bottom:12px;
+    line-height:1.2;
+}
+
+.subtitle{
+    color:#A8B0C3;
+    font-size:16px;
+    line-height:1.7;
+    margin-bottom:30px;
+}
+
+.input-box{
+    margin-bottom:15px;
+}
+
+input{
+    width:100%;
+    height:58px;
+    padding:0 18px;
+    border:none;
+    outline:none;
+    border-radius:18px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.08);
+    color:white;
+    font-size:16px;
+    transition:.3s;
+}
+
+input:focus{
+    border-color:#8B5CF6;
+    box-shadow:0 0 15px rgba(139,92,246,.3);
+}
+
+input::placeholder{
+    color:#8E97A8;
+}
+
+.greeting{
+    height:30px;
+    margin-bottom:15px;
+    font-size:18px;
+    font-weight:600;
+    color:#A855F7;
+}
+
+.btn{
+    width:100%;
+    height:60px;
+    border:none;
+    border-radius:18px;
+    cursor:pointer;
+    color:white;
+    font-size:18px;
+    font-weight:700;
+    background:linear-gradient(
+        90deg,
+        #8B5CF6,
+        #A855F7
+    );
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.footer{
+    margin-top:25px;
+    font-size:14px;
+    color:#94A3B8;
+    line-height:1.7;
+}
+
+.footer strong{
+    color:white;
+}
+
+@media(max-width:480px){
+
+    .logo{
+        width:240px;
+    }
+
+    h1{
+        font-size:28px;
+    }
+
+    .subtitle{
+        font-size:15px;
+    }
+
+}
+.login-image{
+    width:220px;
+    max-width:80%;
+    display:block;
+    margin:15px auto 20px;
+    animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-10px);
+    }
+    100%{
+        transform:translateY(0);
+    }
+}

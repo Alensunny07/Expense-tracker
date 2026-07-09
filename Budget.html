@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget Management</title>
+
+<style>
+
+body{
+    font-family:'Segoe UI',sans-serif;
+    background:#0F172A;
+    color:white;
+    padding:20px;
+}
+
+.card{
+    background:#1E293B;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:15px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    margin-top:10px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    margin-top:15px;
+    font-size:16px;
+    font-weight:600;
+}
+
+.save-btn{
+    background:#22C55E;
+    color:white;
+}
+
+.back-btn{
+    background:#2563EB;
+    color:white;
+}
+
+.value{
+    font-size:32px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.good{
+    color:#22C55E;
+}
+
+.warning{
+    color:#EF4444;
+}
+
+</style>
+</head>
+<body>
+
+<h1>💳 Budget Management</h1>
+
+<div class="card">
+
+<h3>Monthly Budget</h3>
+
+<input
+type="number"
+id="budgetInput"
+placeholder="Enter budget amount">
+
+<button class="save-btn"
+onclick="saveBudget()">
+Save Budget
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Budget Overview</h3>
+
+<p>Budget</p>
+<div class="value" id="budgetAmount">₹0</div>
+
+<p>Total Expense</p>
+<div class="value" id="expenseAmount">₹0</div>
+
+<p>Remaining</p>
+<div class="value good" id="remainingAmount">₹0</div>
+
+</div>
+
+<button class="back-btn"
+onclick="history.back()">
+← Back
+</button>
+
+<script>
+
+let budget =
+Number(localStorage.getItem("budget")) || 0;
+
+let expenses =
+JSON.parse(localStorage.getItem("expenses")) || [];
+
+let totalExpense = 0;
+
+expenses.forEach(item=>{
+    totalExpense += Number(item.amount);
+});
+
+document.getElementById("budgetInput").value =
+budget || "";
+
+function saveBudget(){
+
+    const value =
+    Number(document.getElementById("budgetInput").value);
+
+    localStorage.setItem("budget", value);
+
+    location.reload();
+}
+
+document.getElementById("budgetAmount").innerText =
+"₹" + budget;
+
+document.getElementById("expenseAmount").innerText =
+"₹" + totalExpense;
+
+const remaining = budget - totalExpense;
+
+const remainEl =
+document.getElementById("remainingAmount");
+
+remainEl.innerText = "₹" + remaining;
+
+if(remaining < 0){
+    remainEl.className = "value warning";
+}else{
+    remainEl.className = "value good";
+}
+
+</script>
+
+</body>
+</html>

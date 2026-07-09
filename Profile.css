@@ -1,0 +1,95 @@
+body{
+    background:#0F172A;
+    color:white;
+    font-family:'Segoe UI',sans-serif;
+    padding:20px;
+}
+
+.profile-header{
+    background:linear-gradient(
+    135deg,
+    #7C3AED,
+    #2563EB
+    );
+
+    border-radius:30px;
+    padding:30px;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.avatar{
+    width:100px;
+    height:100px;
+    margin:auto;
+
+    border-radius:50%;
+    background:white;
+    color:#7C3AED;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:42px;
+    font-weight:bold;
+}
+
+.profile-header h2{
+    margin-top:15px;
+}
+
+.member{
+    display:inline-block;
+    margin-top:10px;
+    padding:6px 12px;
+    background:rgba(255,255,255,.15);
+    border-radius:20px;
+}
+
+.overview,
+.goal-card,
+.about-card{
+    background:#1E293B;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:15px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-top:15px;
+}
+
+.stat{
+    background:#0F172A;
+    padding:15px;
+    border-radius:15px;
+    text-align:center;
+}
+
+.stat span{
+    color:#94A3B8;
+    font-size:13px;
+}
+
+.menu .item{
+    background:#1E293B;
+    padding:18px;
+    border-radius:15px;
+    margin-bottom:10px;
+}
+
+.logout-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+
+    background:#EF4444;
+    color:white;
+    font-size:16px;
+    font-weight:600;
+}

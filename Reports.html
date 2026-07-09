@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monthly Report</title>
+
+<link rel="stylesheet" href="Dashboard.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>📅 Monthly Report</h2>
+
+<div class="balance">
+<h1 id="monthBalance">₹0</h1>
+<p>Current Month Balance</p>
+</div>
+
+<div class="cards">
+
+<div class="card income-card">
+<h3>Income</h3>
+<h2 id="monthIncome">₹0</h2>
+</div>
+
+<div class="card expense-card">
+<h3>Expense</h3>
+<h2 id="monthExpense">₹0</h2>
+</div>
+
+</div>
+
+<div class="chart-box">
+<canvas id="reportChart"></canvas>
+</div>
+
+<ul id="summary"></ul>
+
+</div>
+
+<script src="Reports.js"></script>
+
+</body>
+</html>

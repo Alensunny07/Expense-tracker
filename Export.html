@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Export Data</title>
+
+<style>
+
+body{
+    background:#0F172A;
+    color:white;
+    font-family:'Segoe UI',sans-serif;
+    padding:20px;
+}
+
+.card{
+    background:#1E293B;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:15px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    margin-top:10px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.export-btn{
+    background:#22C55E;
+    color:white;
+}
+
+.back-btn{
+    background:#2563EB;
+    color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>📤 Export Data</h1>
+
+<div class="card">
+
+<h3>Export Expenses</h3>
+
+<p>
+Download all transactions as a CSV file.
+</p>
+
+<button class="export-btn" onclick="exportCSV()">
+📥 Export CSV
+</button>
+
+</div>
+
+<button class="back-btn" onclick="history.back()">
+← Back
+</button>
+
+<script>
+
+function exportCSV(){
+
+    let expenses =
+    JSON.parse(localStorage.getItem("expenses")) || [];
+
+    if(expenses.length === 0){
+        alert("No expenses found");
+        return;
+    }
+
+    let csv =
+    "Title,Amount,Category,Date\n";
+
+    expenses.forEach(item=>{
+
+        csv +=
+        `${item.title},${item.amount},${item.category},${item.date}\n`;
+
+    });
+
+    let blob =
+    new Blob([csv], {type:"text/csv"});
+
+    let url =
+    URL.createObjectURL(blob);
+
+    let a =
+    document.createElement("a");
+
+    a.href = url;
+
+    a.download = "expenses.csv";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+</script>
+
+</body>
+</html>

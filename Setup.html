@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Select Mode</title>
+<style>
+body{
+font-family:Arial;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+background:#0F172A;
+color:white;
+flex-direction:column;
+}
+button{
+width:260px;
+padding:15px;
+margin:10px;
+font-size:18px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<h2>How do you want to use SmartExpense AI?</h2>
+
+<button onclick="incomeMode()">
+💰 Income + Expense
+</button>
+
+<button onclick="expenseMode()">
+📝 Expense Only
+</button>
+
+<script>
+
+function incomeMode(){
+
+localStorage.setItem("appMode","income");
+
+window.location.href="Dashboard.html";
+
+}
+
+function expenseMode(){
+
+localStorage.setItem("appMode","expense");
+
+window.location.href="Dashboard.html";
+
+}
+
+</script>
+
+</body>
+</html>
