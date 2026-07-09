@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard</title>
 <link rel="stylesheet" href="Dashboard.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -22,15 +22,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     <div class="header-left">
 
         <img id="headerProfile"
-             src="https://placehold.co/100x100/png"
-             alt="Profile"
-             onclick="document.getElementById('headerImageInput').click()">
-
-        <input type="file"
-               id="headerImageInput"
-               accept="image/*"
-               hidden
-               onchange="changeHeaderProfile(event)">
+     src="https://placehold.co/100x100/png"
+     alt="Profile">
 
         <div class="welcome">
             <h1 id="user">Hello 👋 Alen</h1>
@@ -188,7 +181,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         <span id="budgetPercent">0%</span>
     </div>
 
-<<div class="goal-card">
+<div class="goal-card">
 
     <div class="goal-top">
         <h3>🎯 Savings Goal</h3>
@@ -392,7 +385,8 @@ new Chart(balanceCtx,{
 </script>
 
 
-<script src="Dashboard.js"></script>
+<script type="module" src="firebase.js"></script>
+<script type="module" src="Dashboard.js"></script>
 
 
 <div class="bottom-nav">

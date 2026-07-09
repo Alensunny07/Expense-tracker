@@ -1,4 +1,9 @@
-
+import {
+    saveExpense,
+    loadExpenses,
+    removeExpense,
+    getProfileImage
+} from "./database.js";
 const userName =
 localStorage.getItem("userName");
 
@@ -30,36 +35,64 @@ if(greetingEl){
 if(welcomeEl){
     welcomeEl.innerText = "Welcome Back";
 }
+
 let expenses = [];
 
-try {
-    expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-} catch {
-    expenses = [];
+async function initExpenses(){
+
+    expenses = await loadExpenses();
+
+    showExpense();
+    updateDashboard();
+    updateChart();
+    updateGoal();
+    updateStats();
 }
 
-function save() {
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-}
+initExpenses();
 
-function addExpense() {
+}
+async function addExpense() {
 
     let title = document.getElementById("title").value;
-    let amount = document.getElementById("amount").value;
+    let amount = Number(document.getElementById("amount").value);
     let category = document.getElementById("category").value;
 
-    if(title.trim() === ""){
-    alert("Enter a title");
-    return;
-}
+    if(title.trim()===""){
+        alert("Enter a title");
+        return;
+    }
 
-if(amount === "" || isNaN(amount) || Number(amount) <= 0){
-    alert("Enter a valid amount");
-    return;
-}
-    
+    if(amount<=0){
+        alert("Enter a valid amount");
+        return;
+    }
 
-    expenses.push({
+    const expense = {
+        title,
+        amount,
+        category,
+        date:new Date().toISOString(),
+        month:new Date().getMonth(),
+        year:new Date().getFullYear()
+    };
+
+    await saveExpense(expense);
+
+    expenses.push(expense);
+
+    showExpense();
+    updateDashboard();
+    updateChart();
+    updateGoal();
+    updateStats();
+
+    document.getElementById("title").value="";
+    document.getElementById("amount").value="";
+
+    closePopup();
+}
+({
         title:title,
         amount:amount,
         category:category,
@@ -68,7 +101,7 @@ month: new Date().getMonth(),
 year: new Date().getFullYear()
     });
 
-    save();
+  
 
     showExpense();
     updateDashboard();
@@ -77,16 +110,20 @@ year: new Date().getFullYear()
 
 }
 
-function deleteExpense(index){
+async function deleteExpense(index){
 
-expenses.splice(index,1);
+    if(expenses[index].id){
+        await removeExpense(expenses[index].id);
+    }
 
-save();
-
-showExpense();
-updateDashboard();
-updateChart();
-updateStats();
+    expenses.splice(index,1);
+    updateGoal();
+    updateStats();
+    showExpense();
+    updateDashboard();
+    updateChart();
+    updateGoal();
+    updateStats();
 }
 
 function showExpense(){
@@ -197,7 +234,8 @@ function saveEdit(){
 
     expenses[editIndex].category =
     document.getElementById("editCategory").value;
-
+    updateGoal();
+updateStats();
     save();
 
     showExpense();
@@ -432,10 +470,6 @@ function calculateExpenseTrend(){
         ((currentTotal - lastTotal) / lastTotal) * 100
     ).toFixed(1);
 }
-showExpense();
-updateDashboard();
-updateChart();
-updateStats();
 function updateGoal(){
 
     let goal = Number(localStorage.getItem("goalTarget")) || 0;
@@ -510,42 +544,14 @@ function updateStats(){
     document.getElementById("monthExpense").innerText = "₹" + month;
 
 }
-showExpense();
-updateDashboard();
-updateChart();
-updateGoal();
-updateStats();
-function changeHeaderProfile(event){
+async function loadProfileImage(){
 
-    const file = event.target.files[0];
+    const url = await getProfileImage();
 
-    if(!file) return;
-
-    const reader = new FileReader();
-
-    reader.onload = function(e){
-
-        document.getElementById("headerProfile").src = e.target.result;
-
-        localStorage.setItem(
-            "headerProfile",
-            e.target.result
-        );
-
-    };
-
-    reader.readAsDataURL(file);
+    if(url){
+        document.getElementById("headerProfile").src = url;
+    }
 
 }
 
-window.addEventListener("load",()=>{
-
-    const img = localStorage.getItem("headerProfile");
-
-    if(img){
-
-        document.getElementById("headerProfile").src = img;
-
-    }
-
-});
+loadProfileImage();

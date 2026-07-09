@@ -26,13 +26,41 @@
         and achieve your financial goals with AI.
     </p>
 
-    <div class="input-box">
-        <input
-            type="text"
-            id="name"
-            placeholder="Enter your name"
-            autocomplete="off">
-    </div>
+  <div class="input-box">
+    <input
+        type="email"
+        id="email"
+        placeholder="Email Address">
+</div>
+
+<div class="input-box">
+    <input
+        type="password"
+        id="password"
+        placeholder="Password">
+</div>
+
+<button class="btn" onclick="loginUser()">
+    Login
+</button>
+
+<div class="divider">
+    <span>OR</span>
+</div>
+
+<button class="google-btn" onclick="googleLogin()">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
+    Continue with Google
+</button>
+
+<p class="signup-text">
+    Don't have an account?
+    <a href="Signup.html">Create Account</a>
+</p>
+
+<p class="forgot">
+    <a href="#">Forgot Password?</a>
+</p>
 
     <div id="greeting" class="greeting"></div>
 
@@ -51,66 +79,7 @@
 
 </div>
 
-<script>
-
-const nameInput =
-document.getElementById("name");
-
-const greeting =
-document.getElementById("greeting");
-
-const continueBtn =
-document.getElementById("continueBtn");
-history.pushState(null, null, location.href);
-
-window.addEventListener("popstate", () => {
-    history.pushState(null, null, location.href);
-});
-nameInput.focus();
-
-nameInput.addEventListener("input", () => {
-
-    const name =
-    nameInput.value.trim();
-
-    if(name.length > 0){
-
-        greeting.textContent =
-        `Hello, ${name} 👋`;
-
-        continueBtn.disabled = false;
-
-    }else{
-
-        greeting.textContent = "";
-
-        continueBtn.disabled = true;
-
-    }
-
-});
-
-function saveUser(){
-
-    const name =
-    nameInput.value.trim();
-
-    if(name === "") return;
-
-    localStorage.setItem(
-        "userName",
-        name
-    );
-
-    localStorage.setItem(
-        "onboardingDone",
-        "true"
-    );
-
-    window.location.href="Setup.html";
-}
-
-</script>
-
+<script type="module" src="firebase.js"></script>
+<script type="module" src="login.js"></script>
 </body>
 </html>
