@@ -1,18 +1,28 @@
 import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+import { auth } from "./firebase.js";
+import {
     saveExpense,
     loadExpenses,
     removeExpense,
     getProfileImage
 } from "./database.js";
-const userName =
-localStorage.getItem("userName");
+onAuthStateChanged(auth, (user) => {
 
-document.getElementById("user").innerText =
-"Hello 👋 " + userName;
+    if (!user) {
+        window.location.href = "Login.html";
+        return;
+    }
 
-if(!userName){
-    window.location.href = "Login.html";
-} 
+    document.getElementById("user").innerText =
+        "Hello 👋 " + (user.displayName || user.email);
+
+    if (user.photoURL) {
+        document.getElementById("headerProfile").src = user.photoURL;
+    }
+});
 const greetingEl = document.getElementById("greeting");
 const welcomeEl = document.getElementById("welcomeText");
 
@@ -51,7 +61,7 @@ async function initExpenses(){
 
 initExpenses();
 
-}
+
 async function addExpense() {
 
     let title = document.getElementById("title").value;
@@ -101,14 +111,6 @@ month: new Date().getMonth(),
 year: new Date().getFullYear()
     });
 
-  
-
-    showExpense();
-    updateDashboard();
-    updateChart();
-    updateStats();
-
-}
 
 async function deleteExpense(index){
 
@@ -236,7 +238,7 @@ function saveEdit(){
     document.getElementById("editCategory").value;
     updateGoal();
 updateStats();
-    save();
+    
 
     showExpense();
 
@@ -261,9 +263,12 @@ document.getElementById("popup").style.display="flex";
 function closePopup(){
 document.getElementById("popup").style.display="none";
 }
-function logout(){
+async function logout() {
+
+    await signOut(auth);
 
     localStorage.removeItem("userName");
+    localStorage.removeItem("headerProfile");
 
     window.location.replace("Login.html");
 

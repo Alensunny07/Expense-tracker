@@ -17,8 +17,21 @@ window.loginUser = async function () {
     }
 
     try{
-        await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "Dashboard.html";
+        const result = await signInWithEmailAndPassword(auth, email, password);
+
+localStorage.setItem(
+    "userName",
+    result.user.displayName || result.user.email
+);
+
+if (result.user.photoURL) {
+    localStorage.setItem(
+        "headerProfile",
+        result.user.photoURL
+    );
+}
+
+window.location.href = "Dashboard.html";
     }catch(error){
         alert(error.message);
     }
