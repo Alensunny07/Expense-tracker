@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<link rel="stylesheet" href="Dashboard.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js">
+</script>
+
+</head>
+
+
+<body>
+
+<div class="header">
+
+    <div class="header-left">
+
+        <img id="headerProfile"
+             src="https://placehold.co/100x100/png"
+             alt="Profile"
+             onclick="document.getElementById('headerImageInput').click()">
+
+        <input type="file"
+               id="headerImageInput"
+               accept="image/*"
+               hidden
+               onchange="changeHeaderProfile(event)">
+
+        <div class="welcome">
+            <h1 id="user">Hello 👋 Alen</h1>
+            <p id="greeting">Good Morning ☀️</p>
+            <small id="welcomeText">Welcome Back</small>
+        </div>
+
+    </div>
+
+    <div class="header-icons">
+
+        <button onclick="toggleTheme()">
+            <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <button>
+            <i class="fa-solid fa-bell"></i>
+        </button>
+
+        <button onclick="logout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+
+    </div>
+
+</div>
+<div class="balance" id="balanceSection">
+
+    <div class="balance-top">
+
+        <div>
+            <p>Total Balance</p>
+            <h1 id="balance">₹0</h1>
+
+            <div class="growth">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <span id="growthPercent">0% This Month</span>
+            </div>
+        </div>
+
+        <div class="wallet">
+            <i class="fa-solid fa-wallet"></i>
+        </div>
+
+    </div>
+<div class="balance-chart">
+    <canvas id="balanceChart"></canvas>
+</div>
+    <div class="balance-bottom">
+
+        <div>
+            <small>Total Income</small>
+            <h3 id="balanceIncome">₹0</h3>
+        </div>
+
+        <div>
+            <small>Total Expense</small>
+            <h3 id="balanceExpense">₹0</h3>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="quick-actions">
+
+    <div class="action-card" onclick="addIncome()">
+    <i class="fa-solid fa-plus"></i>
+    <div>
+        <small>Income</small>
+        <h3>Add Income</h3>
+    </div>
+</div>
+    <div class="action-card" onclick="openPopup()">
+    <i class="fa-solid fa-money-bill"></i>
+
+    <div>
+        <small>Expense</small>
+        <h3>Add Expense</h3>
+    </div>
+</div>
+
+    <div class="action-card">
+    <i class="fa-solid fa-chart-pie"></i>
+
+    <div>
+        <small>Reports</small>
+        <h3>View Reports</h3>
+    </div>
+</div>
+
+    <div class="action-card">
+    <i class="fa-solid fa-wallet"></i>
+
+    <div>
+        <small>Budget</small>
+        <h3>Set Budget</h3>
+    </div>
+</div>
+
+</div>
+<div class="transaction-badge">
+    <i class="fa-solid fa-receipt"></i>
+    <span id="totalTransactions">0</span>
+</div>
+<div class="cards">
+
+    <div class="card income-card">
+
+        <div class="card-top">
+            <div class="card-icon income-icon">
+                <i class="fa-solid fa-arrow-down"></i>
+            </div>
+
+            <div>
+                <small>Total Income</small>
+                <h2 id="cardIncome">₹0</h2>
+                <p class="trend-up"></p>
+            </div>
+        </div>
+
+        <button class="card-btn income-btn" onclick="addIncome()">
+            Add Income
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+    </div>
+
+    <div class="card expense-card">
+
+        <div class="card-top">
+            <div class="card-icon expense-icon">
+                <i class="fa-solid fa-arrow-up"></i>
+            </div>
+
+            <div>
+                <small>Total Expense</small>
+                <h2 id="CardExpense">₹0</h2>
+                <p class="trend-down"></p>
+            </div>
+        </div>
+
+        <button class="card-btn expense-btn" onclick="openPopup()">
+            Add Expense
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+    </div>
+
+</div>
+<div class="budget-card">
+
+    <div class="budget-top">
+        <h3>Monthly Budget</h3>
+        <span id="budgetPercent">0%</span>
+    </div>
+
+<<div class="goal-card">
+
+    <div class="goal-top">
+        <h3>🎯 Savings Goal</h3>
+        <span id="goalPercent">0%</span>
+    </div>
+
+    <h2 id="goalDisplay">₹0 / ₹0</h2>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="goalProgress"></div>
+    </div>
+
+</div>
+<div class="stats">
+
+    <div class="stat-box">
+        <h2 id="todayExpense">₹0</h2>
+        <p>Today</p>
+    </div>
+
+    <div class="stat-box">
+        <h2 id="weekExpense">₹0</h2>
+        <p>This Week</p>
+    </div>
+
+    <div class="stat-box">
+        <h2 id="monthExpense">₹0</h2>
+        <p>This Month</p>
+    </div>
+
+</div>
+<div class="summary">
+
+    <div class="summary-card">
+        <i class="fa-solid fa-arrow-trend-up"></i>
+        <h3>Highest Income</h3>
+        <h2 id="highestIncome">₹0</h2>
+    </div>
+
+    <div class="summary-card">
+        <i class="fa-solid fa-arrow-trend-down"></i>
+        <h3>Highest Expense</h3>
+        <h2 id="highestExpense">₹0</h2>
+    </div>
+
+</div>
+<div class="search-box">
+
+    <i class="fa-solid fa-magnifying-glass"></i>
+
+    <input
+        type="text"
+        id="search"
+        placeholder="Search transactions..."
+        onkeyup="showExpense()">
+
+    <select id="filterCategory" onchange="showExpense()">
+        <option value="All">All</option>
+        <option value="Food">Food</option>
+        <option value="Travel">Travel</option>
+        <option value="Shopping">Shopping</option>
+        <option value="Bills">Bills</option>
+        <option value="Other">Other</option>
+    </select>
+
+</div>
+<div class="transactions">
+
+    <div class="transaction-header">
+        <h2>Recent Transactions</h2>
+
+        <button class="view-all">
+            View All
+        </button>
+    </div>
+
+    <ul id="list"></ul>
+
+<div class="chart-card">
+
+    <div class="transaction-header">
+        <h2>Expense Analytics</h2>
+    </div>
+
+    <canvas id="myChart"></canvas>
+
+</div>
+
+<button class="add" onclick="openPopup()">
+    <i class="fa-solid fa-plus"></i>
+</button>
+
+
+<div id="popup" class="popup">
+    <div class="popup-box expense-popup">
+
+        <h2>💸 Add Expense</h2>
+
+        <input
+            type="text"
+            id="title"
+            placeholder="Expense Title">
+
+        <input
+            type="number"
+            id="amount"
+            placeholder="Enter Amount">
+
+        <select id="category">
+            <option value="Food">🍔 Food</option>
+            <option value="Travel">✈️ Travel</option>
+            <option value="Shopping">🛍️ Shopping</option>
+            <option value="Bills">💡 Bills</option>
+            <option value="Other">📦 Other</option>
+        </select>
+
+        <button class="save-btn" onclick="addExpense()">
+            Save Expense
+        </button>
+
+        <button class="cancel-btn" onclick="closePopup()">
+            Cancel
+        </button>
+
+    </div>
+</div>
+<div id="incomePopup" class="popup">
+  
+  <div class="popup-box">
+    <h2>💵 Add Income</h2>
+
+    <input type="number" id="incomeAmount" placeholder="Enter Income">
+
+    <button onclick="saveIncome()">Save Income</button>
+    <button onclick="closeIncomePopup()">Cancel</button>
+  </div>
+</div>
+<div id="editPopup" class="popup">
+  <div class="popup-box">
+
+    <h2>✏️ Edit Expense</h2>
+
+    <input type="text" id="editTitle" placeholder="Title">
+
+    <input type="number" id="editAmount" placeholder="Amount">
+
+    <select id="editCategory">
+      <option value="Food">🍔 Food</option>
+      <option value="Travel">✈️ Travel</option>
+      <option value="Shopping">🛍️ Shopping</option>
+      <option value="Bills">💡 Bills</option>
+      <option value="Other">📦 Other</option>
+    </select>
+
+    <button onclick="saveEdit()">Save</button>
+    <button onclick="closeEditPopup()">Cancel</button>
+
+  </div>
+</div>
+<script>
+const ctx = document.getElementById("myChart");
+
+const chart = new Chart(ctx, { 
+    type: "doughnut",
+    data: {
+        labels: ["Food", "Travel", "Shopping", "Bills", "Other"],
+        datasets: [{
+            data: [0, 0, 0, 0, 0]
+        }]
+    }
+});
+</script>
+
+<script>
+const balanceCtx = document.getElementById("balanceChart");
+
+new Chart(balanceCtx,{
+    type:"line",
+    data:{
+        labels:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+        datasets:[{
+            data:[3200,3800,3500,4800,5200,6100,7000],
+            borderColor:"#ffffff",
+            borderWidth:4,
+            tension:0.5,
+            fill:true,
+            backgroundColor:"rgba(255,255,255,0.15)",
+            pointRadius:0
+        }]
+    },
+    options:{
+        plugins:{legend:{display:false}},
+        scales:{
+            x:{display:false},
+            y:{display:false}
+        },
+        responsive:true,
+        maintainAspectRatio:false
+    }
+});
+</script>
+
+
+<script src="Dashboard.js"></script>
+
+
+<div class="bottom-nav">
+
+    <button class="active" onclick="window.location.href='Dashboard.html'">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </button>
+
+    <button onclick="window.location.href='Reports.html'">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Reports</span>
+    </button>
+
+    <button onclick="window.location.href='Analytics.html'">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Analytics</span>
+    </button>
+
+    <button onclick="window.location.href='Profile.html'">
+        <i class="fa-solid fa-user"></i>
+        <span>Profile</span>
+    </button>
+
+</div>
+</body>
+
+</html>
